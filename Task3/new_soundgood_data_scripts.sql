@@ -19,7 +19,7 @@ FROM instructor
 JOIN (SELECT id, first_name, last_name 
            FROM person) AS p 
            ON p.id = person_id 
-JOIN (SELECT DISTINCT instructor_id, COUNT(*) AS given_lessons 
+JOIN (SELECT instructor_id, COUNT(*) AS given_lessons 
            FROM booking
            WHERE EXTRACT(month FROM booking.booking_date) = EXTRACT(month FROM CURRENT_DATE)
            GROUP BY instructor_id) AS inst
@@ -29,7 +29,7 @@ JOIN (SELECT instructor_id, booking_date
            WHERE EXTRACT(month FROM booking_date) = EXTRACT(month FROM CURRENT_DATE)) AS "date"
            ON "date".instructor_id = person_id
 WHERE inst.given_lessons >= 1 -- <-X
-ORDER BY inst.given_lessons ASC;
+ORDER BY inst.given_lessons DESC;
 
 --list ensembles
 SELECT nextweek.booking_date, genre, CASE WHEN poses.available_positions = 0 THEN 'FULL' 
@@ -62,3 +62,9 @@ FROM booking
     LEFT JOIN ensemble ON booking.id = ensemble.group_lesson_id
 WHERE EXTRACT(YEAR FROM booking.booking_date) = '2022'
 GROUP BY month;
+
+--alternative solution to finding siblings
+SELECT 
+    (SELECT SUM(foo.a) FROM (SELECT COUNT(*) as a FROM student GROUP BY family_id HAVING COUNT(*) = 1) AS foo) AS students_with_0_siblings, 
+    (SELECT SUM(bar.b) FROM (SELECT COUNT(*) as b FROM student GROUP BY family_id HAVING COUNT(*) = 2) AS bar) AS students_with_1_siblings,  
+    (SELECT SUM(foobar.c) FROM (SELECT COUNT(*) as c FROM student GROUP BY family_id HAVING COUNT(*) = 3) AS foobar) AS students_with_2_siblings;
