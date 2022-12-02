@@ -33,7 +33,7 @@ WHERE inst.given_lessons >= 1 -- <-X
 ORDER BY inst.given_lessons DESC;
 
 --list ensembles
-CREATE VIEW ensembles_next_week AS
+CREATE MATERIALIZED VIEW ensembles_next_week AS
 SELECT nextweek.booking_date, genre, CASE WHEN poses.available_positions = 0 THEN 'FULL' 
                                    WHEN poses.available_positions = 1 OR poses.available_positions = 2 THEN '1-2 Positions remain'
                                    ELSE '2 or more positions remain'
