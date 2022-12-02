@@ -14,6 +14,7 @@
 
 --FOR ASSIGNMENT 
 --finds the amount of lessons an instructor has given more or equal to X times during the current month
+CREATE VIEW instructors_lesson_curr_month AS
 SELECT DISTINCT p.id, CONCAT(p.first_name, ' ', p.last_name) as "name", inst.given_lessons, EXTRACT(month FROM CURRENT_DATE) AS "month"
 FROM instructor
 JOIN (SELECT id, first_name, last_name 
@@ -32,6 +33,7 @@ WHERE inst.given_lessons >= 1 -- <-X
 ORDER BY inst.given_lessons DESC;
 
 --list ensembles
+CREATE VIEW ensembles_next_week AS
 SELECT nextweek.booking_date, genre, CASE WHEN poses.available_positions = 0 THEN 'FULL' 
                                    WHEN poses.available_positions = 1 OR poses.available_positions = 2 THEN '1-2 Positions remain'
                                    ELSE '2 or more positions remain'
@@ -45,12 +47,14 @@ LEFT JOIN (SELECT id, booking_date, EXTRACT(isodow FROM booking_date) as weekday
 ORDER BY genre, nextweek.weekday_num ASC;
 
 --lists the total number of people with 1,2 or 3 siblings
+CREATE VIEW num_of_siblings AS
 SELECT 
     (SELECT COUNT(*) FROM (SELECT COUNT(*) FROM student GROUP BY family_id HAVING COUNT(*) = 1) AS foo) AS num0sib, 
     (SELECT COUNT(*)*2 FROM (SELECT COUNT(*) FROM student GROUP BY family_id HAVING COUNT(*) = 2) AS bar) AS num1sib,  
     (SELECT COUNT(*)*3 FROM (SELECT COUNT(*) FROM student GROUP BY family_id HAVING COUNT(*) = 3) AS foobar) AS num2sib;
 
 -- shows the number of lessons given per month during a specified year
+CREATE VIEW num_of_lesson_2022 AS
 SELECT 
     EXTRACT(MONTH FROM booking.booking_date) AS month, 
     COUNT(*) AS all_lessons, 
@@ -64,6 +68,7 @@ WHERE EXTRACT(YEAR FROM booking.booking_date) = '2022'
 GROUP BY month;
 
 --alternative solution to finding siblings
+CREATE VIEW num_of_siblings_alt AS
 SELECT 
     (SELECT SUM(foo.a) FROM (SELECT COUNT(*) as a FROM student GROUP BY family_id HAVING COUNT(*) = 1) AS foo) AS students_with_0_siblings, 
     (SELECT SUM(bar.b) FROM (SELECT COUNT(*) as b FROM student GROUP BY family_id HAVING COUNT(*) = 2) AS bar) AS students_with_1_siblings,  
