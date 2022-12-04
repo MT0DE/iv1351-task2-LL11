@@ -14,7 +14,7 @@
 
 --FOR ASSIGNMENT 
 --finds the amount of lessons an instructor has given more or equal to X times during the current month
-CREATE VIEW instructors_lesson_curr_month AS
+CREATE MATERIALIZED VIEW instructors_lesson_curr_month AS
 SELECT DISTINCT p.id, CONCAT(p.first_name, ' ', p.last_name) as "name", inst.given_lessons, EXTRACT(month FROM CURRENT_DATE) AS "month"
 FROM instructor
 JOIN (SELECT id, first_name, last_name 
@@ -33,7 +33,7 @@ WHERE inst.given_lessons >= 1 -- <-X
 ORDER BY inst.given_lessons DESC;
 
 --list ensembles
-CREATE MATERIALIZED VIEW ensembles_next_week AS
+CREATE MATERIALIZED VIEW ensembles_next_week AS 
 SELECT nextweek.booking_date, genre, CASE WHEN poses.available_positions = 0 THEN 'FULL' 
                                    WHEN poses.available_positions = 1 OR poses.available_positions = 2 THEN '1-2 Positions remain'
                                    ELSE '2 or more positions remain'
