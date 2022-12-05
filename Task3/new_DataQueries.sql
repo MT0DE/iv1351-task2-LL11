@@ -113,22 +113,22 @@ VALUES
     'Classroom31B','2022-11-25','14:30','16:30','Intermediate','Guitar'),
 ((SELECT person_id FROM instructor WHERE person_id = 8), 
     (SELECT id FROM payment WHERE id = 4),
-    'Classroom24B','2022-11-26','14:30','16:00','Advanced', Null),
+    'Classroom24B','2022-12-15','14:30','16:00','Advanced', Null),
 ((SELECT person_id FROM instructor WHERE person_id = 11), 
     (SELECT id FROM payment WHERE id = 3),
     'Classroom31A','2022-12-02','13:00','14:00','Intermediate','Flute'),
 ((SELECT person_id FROM instructor WHERE person_id = 8), 
     (SELECT id FROM payment WHERE id = 4),
-    'Classroom24B','2022-11-20','15:00','16:30','Advanced',Null),
+    'Classroom24B','2022-12-19','15:00','16:30','Advanced',Null),
 ((SELECT person_id FROM instructor WHERE person_id = 15), 
     (SELECT id FROM payment WHERE id = 1),
-    'Classroom31B','2022-12-07','14:30','16:30','Intermediate', 'Piano'),
-((SELECT person_id FROM instructor WHERE person_id = 7), 
+    'Classroom31B','2022-12-21','14:30','16:30','Intermediate', 'Piano'),
+((SELECT person_id FROM instructor WHERE person_id = 7),
     (SELECT id FROM payment WHERE id = 1),
     'Classroom33','2022-12-01','15:00','17:00','Intermediate','Guitar'),
 ((SELECT person_id FROM instructor WHERE person_id = 8), 
-    (SELECT id FROM payment WHERE id = 4), 
-    'Classroom24B','2022-12-07','14:30','16:00','Advanced', Null);
+    (SELECT id FROM payment WHERE id = 4),
+    'Classroom24B','2022-12-12','14:30','16:00','Advanced', Null);
 
 
 
