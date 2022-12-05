@@ -5,7 +5,7 @@ CREATE TABLE available (
  end_time TIME(0) NOT NULL
 );
 
-ALTER TABLE available ADD CONSTRAINT PK_available PRIMARY KEY (person_id, available_date, start_time, end_time);
+ALTER TABLE available ADD CONSTRAINT PK_available PRIMARY KEY (instructor_id, available_date, start_time, end_time);
 
 
 CREATE TABLE available_instruments (
@@ -33,7 +33,7 @@ CREATE TABLE known_instrument (
  instrument VARCHAR(50) NOT NULL
 );
 
-ALTER TABLE known_instrument ADD CONSTRAINT PK_known_instrument PRIMARY KEY (person_id, instrument);
+ALTER TABLE known_instrument ADD CONSTRAINT PK_known_instrument PRIMARY KEY (instructor_id, instrument);
 
 
 CREATE TABLE payment (
